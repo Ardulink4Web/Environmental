@@ -2,6 +2,8 @@ package polito.environmental;
 
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,7 +64,7 @@ public class ArdulinkColumnApp implements Controller, GUI {
 
 	private void initialize() {
 		this.frame = new JFrame();
-		this.frame.setBounds(100, 100, 450, 300);
+		this.frame.setBounds(100, 100, 900, 600);
 		this.frame.setDefaultCloseOperation(3);
 		this.frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
 		JSplitPane splitPane = new JSplitPane();
@@ -77,9 +79,30 @@ public class ArdulinkColumnApp implements Controller, GUI {
 		splitPane_1.setBottomComponent(this.statusArea);
 		this.leftPanel_1 = new JPanel();
 		splitPane.setLeftComponent(this.leftPanel_1);
-		this.leftPanel_1.setLayout(new GridLayout(5, 1, 10, 10));
-		this.setupConnectionButtons(this.leftPanel_1);
-		this.setupStartAndConfiguration(this.leftPanel_1);
+		
+		this.leftPanel_1.setLayout(new GridBagLayout());
+
+		GridBagConstraints c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridheight = 3;
+		c.gridwidth = 1;
+		c.fill = GridBagConstraints.VERTICAL;
+		
+		this.configurationPanel = new ConfigurationPanel();
+		this.leftPanel_1.add(this.configurationPanel, c);
+
+		JPanel buttons = new JPanel();
+		buttons.setLayout(new GridLayout(0, 3));
+		this.setupConnectionButtons(buttons);
+		this.setupStartAndConfiguration(buttons);
+		
+		c = new GridBagConstraints();
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridheight = 1;
+		c.gridwidth = 1;
+		this.leftPanel_1.add(buttons, c);
 
 		// Checking of file
 		fileChecker = new Thread() {
@@ -190,8 +213,6 @@ public class ArdulinkColumnApp implements Controller, GUI {
 		});
 		this.debug = new JCheckBox("Debug", true);
 		this.invertPin = new JCheckBox("Inverti PIN", true);
-		this.configurationPanel = new ConfigurationPanel();
-		this.leftPanel_1.add(this.configurationPanel);
 		leftPanel.add(this.start);
 		leftPanel.add(this.debug);
 		leftPanel.add(this.invertPin);
