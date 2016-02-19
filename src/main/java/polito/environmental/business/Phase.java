@@ -5,11 +5,18 @@ public class Phase {
 	private String phaseName;
 	
 	private boolean[] valveStatus;
+	
+	private long duration;
 
-	public Phase(String phaseName, boolean ... valveStatus) {
+	public Phase(String phaseName, long duration, boolean ... valveStatus) {
 		super();
 		this.phaseName = phaseName;
 		this.valveStatus = valveStatus;
+		this.duration = duration;
+	}
+	
+	public long getDuration() {
+		return duration;
 	}
 
 	public String getPhaseName() {
